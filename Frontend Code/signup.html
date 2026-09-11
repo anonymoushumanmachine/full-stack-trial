@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Signup Page</title>
+    <!-- css code  -->
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      h1 {
+        font-size: 45px;
+        margin: 20px;
+      }
+      .signup-form {
+        border: 1px solid #bbb;
+        width: 400px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+      }
+      .signup-form input {
+        width: 80%;
+        padding: 10px 20px;
+        margin: 10px 0;
+        font-size: 20px;
+        background-color: transparent;
+        border: 2px solid;
+        border-radius: 10px;
+        outline: none;
+      }
+      .signup-form p {
+        color: gold;
+        text-transform: capitalize;
+        font-size: 18px;
+        margin: 10px 0;
+        margin-bottom: -10px;
+      }
+      #profile-pic {
+        font-size: 1em;
+        border: none;
+      }
+      #signup-button {
+        width: 70%;
+        padding: 10px;
+        border: 0;
+        outline: 0;
+        border-radius: 10px;
+        font-size: 20px;
+        background-color: rgb(23, 94, 23);
+        cursor: pointer;
+        opacity: 0.8;
+      }
+      #signup-button:hover {
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Signup Page</h1>
+    <form class="signup-form">
+      <input type="text" id="username" placeholder="username" />
+      <input type="password" id="password" placeholder="password" />
+      <p>select profile pic</p>
+      <input type="file" id="profile-pic" />
+      <button id="signup-button" type="button">signup</button>
+    </form>
+    <!-- js code  -->
+    <script>
+      let username = document.getElementById("username");
+      let password = document.getElementById("password");
+      let image = document.getElementById("profile-pic");
+      let signupButton = document.getElementById("signup-button");
+
+      let url = "http://localhost:3000/";
+      signupButton.addEventListener("click", sendData);
+      //   send data to backend
+      async function sendData() {
+        let imageFile = image.files[0];
+        let formData = new FormData();
+        // appending
+        if (!username.value || !password.value || !imageFile) {
+          alert("Please fill all data");
+          return;
+        }
+        formData.append("username", username.value);
+        formData.append("password", password.value);
+        formData.append("profilePic", imageFile);
+        console.log("file", formData);
+        let request = await fetch(`${url}signup`, {
+          method: "POST",
+          body: formData,
+        });
+        let response = await request.json();
+        console.log("server-response: ", response);
+      }
+    </script>
+  </body>
+</html>
