@@ -1,8 +1,9 @@
 const User = require("../Model/userModel");
 const upload = require("../Multer/multer");
+const bcrypt = require("bcrypt");
 const signupController = async (req, res) => {
   // testing file
-  upload(req, res, (err) => {
+  upload(req, res, async (err) => {
     if (err) {
       return res.status(400).json({ errMessage: err.message });
     }
@@ -17,8 +18,13 @@ const signupController = async (req, res) => {
       if (!req.file) {
         return res.status(400).json({ message: "please give image" });
       }
+      let hashedPassword = await bcrypt.hash(password, 10);
       // storing in database
-      // await User.create({ username, password, profilePic: req.file.path });
+      await User.create({
+        username,
+        password: hashedPassword,
+        profilePic: req.file.path,
+      });
       return res.status(201).json({ message: "new user created successfully" });
     } catch (error) {
       res
