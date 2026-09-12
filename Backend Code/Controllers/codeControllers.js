@@ -30,7 +30,10 @@ const signupController = async (req, res) => {
     } catch (error) {
       res
         .status(500)
-        .json({ error: "error in signup:", errMessage: error.message });
+        .json({
+          error: "error in signupController:",
+          errMessage: error.message,
+        });
     }
   });
 };
