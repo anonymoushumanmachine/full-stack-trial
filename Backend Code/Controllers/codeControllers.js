@@ -18,6 +18,7 @@ const signupController = async (req, res) => {
       if (!req.file) {
         return res.status(400).json({ message: "please give image" });
       }
+      // secure password
       let hashedPassword = await bcrypt.hash(password, 10);
       // storing in database
       await User.create({
