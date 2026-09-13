@@ -41,6 +41,11 @@ async function sendData() {
     document.querySelector(".output-message").textContent = response.errMessage;
     document.querySelector(".output-message").style.color = "red";
   }
+  if (!response.errMessage) {
+    username.value = "";
+    password.value = "";
+    image.value = "";
+  }
   setTimeout(() => {
     document.querySelector(".output-message").textContent = "";
   }, 3000);
