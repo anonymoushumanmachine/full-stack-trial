@@ -1,6 +1,7 @@
 let username = document.getElementById("username");
 let password = document.getElementById("password");
 let image = document.getElementById("profile-pic");
+
 let signupButton = document.getElementById("signup-button");
 let passwordEye = document.querySelector(".fa-solid");
 
@@ -15,7 +16,6 @@ passwordEye.onclick = () => {
     passwordEye.classList.replace("fa-eye-slash", "fa-eye");
   }
 };
-
 //   send data to backend
 async function sendData() {
   let imageFile = image.files[0];
@@ -40,6 +40,12 @@ async function sendData() {
   } else if (response.errMessage) {
     document.querySelector(".output-message").textContent = response.errMessage;
     document.querySelector(".output-message").style.color = "red";
+  }
+  // clear all inputs
+  if (!response.errMessage) {
+    username.value = "";
+    password.value = "";
+    image.value = "";
   }
   setTimeout(() => {
     document.querySelector(".output-message").textContent = "";
