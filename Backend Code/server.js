@@ -10,6 +10,7 @@ const app = express();
 connectDB();
 // middlewares
 app.use(cors());
+app.use(express.json());
 // routesS
 app.use(codesRouter);
 const PORT = process.env.PORT || 3000;
