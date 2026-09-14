@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Document</title>
+  </head>
+  <!-- css code  -->
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgb(36, 22, 53);
+    }
+    button {
+      padding: 7px 14px;
+      font-size: 30px;
+      border-radius: 20px;
+      border: 0;
+      font-weight: 600;
+      color: #fff;
+      background-color: orangered;
+      cursor: pointer;
+      opacity: 0.8;
+    }
+    button:hover {
+      opacity: 1;
+    }
+  </style>
+  <body>
+    <button id="profile-button">Profile</button>
+    <!-- js code  -->
+    <script>
+      let profileButton = document.getElementById("profile-button");
+      // get token from local storage
+      let existingToken = localStorage.getItem("tokenString");
+      let url = "https://full-stack-trial-lmcb.onrender.com/";
+      profileButton.addEventListener("click", sendData);
+      async function sendData() {
+        if (!existingToken || existingToken === null) {
+          alert("Not Allowed");
+          return;
+        }
+        let request = await fetch(`${url}dashboard`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${existingToken}`,
+          },
+        });
+        let response = await request.json();
+        console.log("out: ", response);
+        if (response.message) {
+          // alert(response.message);
+          window.location.href = "./profile.html";
+        }
+      }
+    </script>
+  </body>
+</html>
